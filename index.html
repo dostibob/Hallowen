@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Halloween Jugueton</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Creepster & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for spooky & romantic icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        creepster: ['Creepster', 'cursive'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        halloween: {
+                            dark: '#0a0514',
+                            card: '#160b28',
+                            purple: '#7c3aed',
+                            neon: '#a855f7',
+                            orange: '#f97316',
+                            gold: '#fbbf24',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0514;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glow-text {
+            text-shadow: 0 0 15px rgba(168, 85, 247, 0.6), 0 0 30px rgba(249, 115, 22, 0.4);
+        }
+        .glow-box {
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.25);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        /* Custom scrollbar for mobile sleekness */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0514;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7c3aed;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col items-center justify-center bg-halloween-dark relative select-none">
+
+    <!-- Atmospheric background glowing elements -->
+    <div class="absolute top-[-10%] left-[-20%] w-[70vw] h-[70vw] bg-purple-900/20 rounded-full blur-[100px] pointer-events-none animate-pulse-glow"></div>
+    <div class="absolute bottom-[-10%] right-[-20%] w-[70vw] h-[70vw] bg-orange-600/15 rounded-full blur-[100px] pointer-events-none animate-pulse-glow" style="animation-delay: 1.5s;"></div>
+
+    <!-- Main Container styled precisely for iPhone 16 viewport -->
+    <div id="app-container" class="w-full max-w-md h-full max-h-[920px] flex flex-col relative z-10 bg-halloween-dark/80 backdrop-blur-xl border border-purple-900/30 sm:rounded-[40px] sm:shadow-2xl sm:border-2 overflow-hidden">
+
+        <!-- Top Status Bar / Header (iPhone style subtle notch area) -->
+        <div class="pt-4 px-6 pb-2 flex justify-between items-center text-xs text-purple-300/60 font-medium">
+            <span><i class="fa-solid fa-ghost mr-1 text-orange-400"></i> Noche de Brujas</span>
+            <span id="progress-indicator" class="hidden">Pregunta <span id="current-q-num">1</span>/5</span>
+            <span><i class="fa-solid fa-battery-three-quarters text-green-400"></i> Amor ∞</span>
+        </div>
+
+        <!-- Dynamic Content Area -->
+        <div id="view-area" class="flex-1 flex flex-col px-6 pb-8 overflow-y-auto">
+            
+            <!-- VIEW 1: WELCOME SCREEN -->
+            <div id="screen-welcome" class="flex-1 flex flex-col items-center justify-center text-center py-4">
+                <div class="w-28 h-28 mx-auto mb-6 relative animate-float flex items-center justify-center bg-gradient-to-br from-purple-600/30 to-orange-500/30 rounded-full border-2 border-purple-500/40 glow-box">
+                    <i class="fa-solid fa-pumpkin text-5xl text-orange-400 drop-shadow-[0_0_10px_rgba(249,115,22,0.8)]"></i>
+                    <div class="absolute -bottom-2 bg-purple-900 px-3 py-1 rounded-full border border-purple-500/50 text-xs font-semibold text-purple-200">
+                        Sorpresa de Halloween 
+                    </div>
+                </div>
+
+                <h1 class="font-creepster text-4xl sm:text-5xl tracking-wide text-orange-400 glow-text mb-3">
+                    Nuestro Halloween Mágico
+                </h1>
+
+                <p class="text-sm text-purple-200/80 mb-8 px-4 leading-relaxed font-light">
+                    Dicen que en las noches de Halloween, los velos entre los mundos se desvanecen y la magia se siente en el aire... Pero esta noche no hay espíritus errantes, solo nosotros celebrando nuestro primer Halloween juntos. 🎃✨ Desde el primer día que empezamos a escribir nuestra propia historia, cada momento a tu lado se ha vuelto mi favorito. Para llegar al final de este recorrido y descubrir tu misteriosa sorpresa, tendrás que demostrar qué tanto prestas atención a lo nuestro. Si fallas, no te preocupes, la misma magia te dará una pequeña ayudita. ¿Estás lista, cangrejito? Comencemos...
+                </p>
+
+                <button onclick="startAdventure()" class="w-full py-4 px-6 bg-gradient-to-r from-purple-600 to-orange-600 hover:from-purple-500 hover:to-orange-500 text-white font-semibold rounded-2xl shadow-lg shadow-purple-900/40 border border-purple-400/30 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-3 text-base">
+                    <span>Comenzar Aventura</span>
+                    <i class="fa-solid fa-wand-magic-sparkles text-orange-300"></i>
+                </button>
+            </div>
+
+            <!-- VIEW 2: QUESTION & STORY SCREEN (Injected dynamically) -->
+            <div id="screen-question" class="flex-1 flex flex-col justify-between hidden py-2">
+                <!-- Story & Question Container -->
+                <div class="space-y-4">
+                    <!-- Story Box -->
+                    <div class="bg-purple-950/40 border border-purple-500/20 rounded-2xl p-4 backdrop-blur-md relative overflow-hidden">
+                        <div class="absolute top-0 right-0 transform translate-x-3 -translate-y-3 opacity-10">
+                            <i class="fa-solid fa-book-skull text-8xl text-purple-300"></i>
+                        </div>
+                        <span class="inline-block text-[11px] font-bold uppercase tracking-wider text-orange-400 mb-1">
+                            <i class="fa-solid fa-scroll mr-1"></i> Capítulo <span id="story-chapter">1</span>
+                        </span>
+                        <p id="story-text" class="text-xs sm:text-sm text-purple-100/90 leading-relaxed font-light">
+                            <!-- Story text goes here -->
+                        </p>
+                    </div>
+
+                    <!-- Question Box -->
+                    <div class="bg-halloween-card/90 border border-purple-500/30 rounded-2xl p-5 shadow-xl">
+                        <h3 id="question-title" class="font-semibold text-base sm:text-lg text-white mb-4 flex items-start">
+                            <i class="fa-solid fa-circle-question text-orange-400 mr-2 mt-1"></i>
+                            <span id="question-text">¿Pregunta aquí?</span>
+                        </h3>
+
+                        <!-- Options Container -->
+                        <div id="options-container" class="space-y-3">
+                            <!-- Dynamically populated option buttons -->
+                        </div>
+
+                        <!-- Feedback / Hint Box -->
+                        <div id="feedback-box" class="mt-4 hidden p-3 rounded-xl text-xs sm:text-sm border transition-all duration-300">
+                            <!-- Feedback or Hint message -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Action / Next button if needed -->
+                <div id="next-action-container" class="pt-4 hidden">
+                    <button onclick="nextQuestion()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-500 text-white font-medium rounded-2xl shadow-md border border-purple-400/30 flex items-center justify-center space-x-2 text-sm active:scale-95 transition-all">
+                        <span>Siguiente Misterio</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- VIEW 3: FINAL SURPRISE SCREEN -->
+            <div id="screen-final" class="flex-1 flex flex-col justify-between hidden py-2 overflow-y-auto">
+                <div class="text-center space-y-4 pt-2">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-tr from-orange-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-orange-500/30 border border-orange-400/40 animate-bounce">
+                        <i class="fa-solid fa-heart text-3xl text-white"></i>
+                    </div>
+
+                    <h2 class="font-creepster text-3xl sm:text-4xl text-orange-400 glow-text">
+                        ¡Has Superado el Embrujo!
+                    </h2>
+
+                    <!-- Emotive Message -->
+                    <div class="bg-purple-950/50 border border-purple-500/30 rounded-2xl p-4 text-left space-y-3">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-orange-400 flex items-center">
+                            <i class="fa-solid fa-envelope-open-text mr-2"></i> Mensaje Secreto para el ADMV
+                        </h4>
+                        <p class="text-xs sm:text-sm text-purple-100/90 leading-relaxed font-light">
+                            Mi vida, cada respuesta demuestra cuánto significas para mí y cómo cada recuerdo a tu lado es mi tesoro favorito. Este Halloween quería hacer algo especial porque iluminas incluso mis días más oscuros. Eres mi magia, mi paz y mi gran amor. ¡Gracias por jugar conmigo!
+                        </p>
+                    </div>
+
+                    <!-- Gift Hint Box -->
+                    <div class="bg-gradient-to-r from-orange-950/60 to-purple-950/60 border border-orange-500/40 rounded-2xl p-4 text-left">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-orange-300 mb-1 flex items-center">
+                            <i class="fa-solid fa-gift mr-2 text-orange-400 animate-pulse"></i> Pista Final del Regalo
+                        </h4>
+                        <p class="text-xs sm:text-sm text-orange-100/90 font-light">
+                        El tesoro de esta noche no es un dulce cualquiera. Para encontrarlo, tienes que regresar al punto de partida de todo: aquel parque que guarda los nervios, las risas y la magia de nuestra primera cita. Abre el mapa de aquí abajo y encuéntrame ahí.                        </p>
+                    </div>
+
+                    <!-- Interactive Map Card -->
+                    <div class="bg-halloween-card border border-purple-500/30 rounded-2xl p-4 text-left">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-purple-300 flex items-center">
+                                <i class="fa-solid fa-map-location-dot mr-2 text-orange-400"></i> Ubicación del Encuentro
+                            </span>
+                            <span class="text-[10px] bg-green-500/20 text-green-300 border border-green-500/30 px-2 py-0.5 rounded-full font-medium">Activo ahora</span>
+                        </div>
+                        
+                        <div class="rounded-xl overflow-hidden border border-purple-500/20 bg-purple-950/80 p-3 flex items-center space-x-3 mb-3">
+                            <div class="w-12 h-12 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-400 text-xl shrink-0">
+                                <i class="fa-solid fa-location-crosshairs"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h5 class="text-xs sm:text-sm font-semibold text-white truncate">Parque del inicio / Lugar Secreto</h5>
+                                <p class="text-[11px] text-purple-300/70 truncate">Las Cebras, Las Gaviotas, 96536 Coatzacoalcos, Ver.</p>
+                            </div>
+                        </div>
+
+                        <a id="maps-link" href="https://maps.app.goo.gl/8mBKoZy6vbkfMPpc8" target="_blank" class="w-full py-3.5 bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-400 hover:to-purple-500 text-white font-medium rounded-xl text-xs sm:text-sm shadow-md flex items-center justify-center space-x-2 active:scale-95 transition-all">
+                            <span>Abrir Ubicación en Google Maps</span>
+                            <i class="fa-solid fa-external-link-alt text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="pt-4 text-center">
+                    <button onclick="resetAdventure()" class="text-xs text-purple-400 hover:text-purple-300 underline font-light">
+                        Volver a jugar desde el principio
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Custom In-App Notification / Modal Box (No native alert) -->
+        <div id="custom-modal" class="absolute inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-6 hidden">
+            <div class="bg-halloween-card border border-purple-500/40 rounded-3xl p-6 w-full max-w-xs text-center shadow-2xl animate-in fade-in zoom-in duration-200">
+                <div id="modal-icon" class="w-14 h-14 mx-auto mb-4 rounded-full flex items-center justify-center text-2xl">
+                    <!-- Icon injected -->
+                </div>
+                <h4 id="modal-title" class="font-semibold text-base text-white mb-2">¡Título!</h4>
+                <p id="modal-message" class="text-xs text-purple-200/80 mb-5 leading-relaxed font-light">Mensaje descriptivo aquí...</p>
+                <button onclick="closeModal()" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold rounded-xl shadow-md transition-all">
+                    Entendido, amor
+                </button>
+            </div>
+        </div>
+
+    <!-- Footer tiny brand -->
+    <div class="pb-3 text-center text-[10px] text-purple-400/40 font-light">
+        Creado con todo el amor de tu novio • Halloween 2026
+    </div>
+
+    </div>
+
+    <!-- JavaScript Logic & Quiz State -->
+    <script>
+        const quizData = [
+            {
+                chapter: 1,
+                story: "Bajo la pálida luz de la luna ocurrira nuestra primera cita de Halloween, el aire frio, un misterio y una sorpresa por descubrir. Las calles estaran silenciosas, pero nuestros corazones latiran al mismo compás...",
+                question: "¿Qué palabra define exactamente lo que siento cada vez que te veo otra vez?",
+                options: [
+                    "Magia pura",
+                    "Felicidad infinita",
+                    "Hogar",
+                    "Todas las anteriores"
+                ],
+                correctIndex: 3,
+                hints: [
+                    "Pista 1: Eres mi refugio, mi alegría y mi hechizo favorito.",
+                    "Pista 2: ¡todas pueden encajar en nuestro cuento!",
+                    "Pista 3: ¡La respuesta correcta engloba todo lo que eres para mí!"
+                ]
+            },
+            {
+                chapter: 2,
+                story: "Mientras avanzamos por el bosque encantado, un viejo búho nos observa desde la rama más alta. Recuerdo perfectamente aquella noche fría de verano donde me regalaste tu sonrisa y de la cual quedaria enamorado para la eternidad...",
+                question: "De todos los lugares que queremos conocer juntos algún día, ¿cuál encabeza nuestra lista de deseos?",
+                options: [
+                    "Un viaje a Veracruz para ver el atardecer agarrados de la mano",
+                    "Guanajuato al callejon de los besos y su magnifica vibra",
+                    "Una cabaña a las afueras de la ciudad roedeados de naturaleza y amor",
+                    "Cualquier lugar con tal de estar juntos"
+                ],
+                correctIndex: 0,
+                hints: [                    
+                    "Pista 1: Nuestro futuro plan para vernos el 14 de febrero",
+                    "Pista 2: Implica arena, sonido de las olas y el mejor clima.",
+                    "Pista 3: Un escape perfecto de la rutina para caminar a la orilla del mar."
+                ]
+            },
+            {
+                chapter: 3,
+                story: "Un susurro cruza la brisa otoñal. un millon de citas y metas por cumplir. Todavia recuerdo nuestro primer beso bajo el frio de la ciudad dando inicio a mi vicio mas grande, tus labios... .",
+                question: "¿Cómo se llama la primer canción que te dedique y comenzo la playlist mas hermosa que existe y donde siempre que vuelvo no puedo dejar de pensar en ti",
+                options: [
+                    "ILY - Kapo & Mike Towers",
+                    "Latch - Dislousure & Sam Smith ",
+                    "Congratulations - Mac Miller & Bilial",
+                    "Cose Della Vita - Eros Ramazzotti"
+                ],
+                correctIndex: 2,
+                hints: [
+                    "Pista 1: Expresa mi admiracion y profundo amor hacia ti.",
+                    "Pista 2: No es una canción que suene todo el tiempo en tus audífonos, pero el título significa exactamente lo que sentí (y siento) al haberte encontrado.",
+                    "Pista 3: Es una palabra en que suena triunfal y festiva; te la puse porque tenerte en mi vida se siente exactamente así"
+                ]
+            },
+            {
+                chapter: 4,
+                story: "Los pajaros no dejan de cantar, cantan por un amor que sigue creciendo dia con dia. Adoro la forma en que compartimos secretos, risas cómplices y abrazos con la mirada de te amo en cada roce...",
+                question: "¿Cuál es el apodo especial o cariñoso que te comencé a decir cuando empezamos a salir?",
+                options: [
+                    "Corazón",
+                    "Bebe/bb",
+                    "Amor",
+                    "Cangrejito "
+                ],
+                correctIndex: 3,
+                hints: [
+                    "Pista 1: No es un apodo genérico, tiene caparazón y camina de ladito en nuestros corazones.",
+                    "Pista 2: Es el mismo nombre con el que bautizamos indirectamente tu negocio de uñas...",
+                    "Pista 3: Es la opción B, ¡mi amado cangrejito!"
+                ]
+            },
+            {
+                chapter: 5,
+                story: "Hemos llegado al final del sendero embrujado. Las luces parpadean despidiendo la noche y guiando nuestros pasos hacia el gran final...",
+                question: "Si el futuro me daba miedo antes, ahora tengo la respuesta más clara de todas... Si te preguntaras qué es lo que más deseo en esta vida, ¿cuál sería mi respuesta definitiva?",
+                options: [
+                    "Tener éxito profesional y cumplir mis metas",
+                    "Viajar por todo el mundo conociendo lugares nuevos",
+                    "Vivir siempre el momento sin pensar en el mañana",
+                    "Construir un futuro a tu lado y pasar el resto de mi vida contigo"
+                ],
+                correctIndex: 3,
+                hints: [
+                    "Pista 1: No busques cosas materiales ni metas lejanas... piensa en la persona que está leyendo esto y en lo que más repito cuando hablo de lo nuestro.",
+                    "Pista 2: Ni un hechizo de bruja ni una poción mágica podrían darme lo que más anhelo en este mundo.",
+                    "Pista 3: Piénsalo bien: de todo lo que existe en el universo, ¿qué es lo que me hace sentir más seguro y feliz?"
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let incorrectAttempts = 0;
+
+        const screenWelcome = document.getElementById('screen-welcome');
+        const screenQuestion = document.getElementById('screen-question');
+        const screenFinal = document.getElementById('screen-final');
+        const progressIndicator = document.getElementById('progress-indicator');
+        const currentQNum = document.getElementById('current-q-num');
+        const storyChapter = document.getElementById('story-chapter');
+        const storyText = document.getElementById('story-text');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackBox = document.getElementById('feedback-box');
+        const nextActionContainer = document.getElementById('next-action-container');
+        const customModal = document.getElementById('custom-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const modalIcon = document.getElementById('modal-icon');
+
+        function startAdventure() {
+            screenWelcome.classList.add('hidden');
+            screenQuestion.classList.remove('hidden');
+            progressIndicator.classList.remove('hidden');
+            currentQuestionIndex = 0;
+            incorrectAttempts = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = quizData[currentQuestionIndex];
+            currentQNum.textContent = currentQuestionIndex + 1;
+            storyChapter.textContent = q.chapter;
+            storyText.textContent = q.story;
+            questionText.textContent = q.question;
+            
+            feedbackBox.classList.add('hidden');
+            nextActionContainer.classList.add('hidden');
+            incorrectAttempts = 0;
+
+            optionsContainer.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3.5 rounded-xl bg-purple-900/30 hover:bg-purple-800/40 border border-purple-500/30 text-xs sm:text-sm text-purple-100 transition-all duration-200 flex items-center justify-between group active:scale-[0.98]";
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-solid fa-chevron-right text-purple-400/50 group-hover:text-orange-400 transition-colors"></i>`;
+                btn.onclick = () => selectOption(idx, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedIndex, btnElement) {
+            const q = quizData[currentQuestionIndex];
+            
+            if (selectedIndex === q.correctIndex) {
+                btnElement.classList.remove('bg-purple-900/30', 'hover:bg-purple-800/40', 'border-purple-500/30');
+                btnElement.classList.add('bg-green-950/60', 'border-green-500/60', 'text-green-200');
+                
+                const allButtons = optionsContainer.querySelectorAll('button');
+                allButtons.forEach(b => b.disabled = true);
+
+                showFeedback(true, "¡Acertaste, mi amor! El hechizo se fortalece.");
+                
+                setTimeout(() => {
+                    if (currentQuestionIndex < quizData.length - 1) {
+                        nextActionContainer.classList.remove('hidden');
+                    } else {
+                        showFinalScreen();
+                    }
+                }, 600);
+
+            } else {
+                incorrectAttempts++;
+                btnElement.classList.add('bg-red-950/40', 'border-red-500/40', 'text-red-200', 'opacity-60');
+                btnElement.disabled = true;
+
+                if (incorrectAttempts <= 3) {
+                    const hintText = q.hints[incorrectAttempts - 1];
+                    showFeedback(false, `Ups, esa no es la respuesta correcta. 🦉 Pista ${incorrectAttempts}/3: ${hintText}`);
+                } else {
+                    showFeedback(false, `¡Ya tienes las 3 pistas, amor! La respuesta correcta era: "${q.options[q.correctIndex]}"`);
+                    const allButtons = optionsContainer.querySelectorAll('button');
+                    allButtons.forEach((b, i) => {
+                        b.disabled = true;
+                        if (i === q.correctIndex) {
+                            b.classList.add('bg-green-950/60', 'border-green-500/60', 'text-green-200');
+                        }
+                    });
+                    setTimeout(() => {
+                        if (currentQuestionIndex < quizData.length - 1) {
+                            nextActionContainer.classList.remove('hidden');
+                        } else {
+                            showFinalScreen();
+                        }
+                    }, 1200);
+                }
+            }
+        }
+
+        function showFeedback(isSuccess, message) {
+            feedbackBox.classList.remove('hidden', 'bg-green-950/50', 'border-green-500/40', 'text-green-200', 'bg-orange-950/50', 'border-orange-500/40', 'text-orange-200');
+            if (isSuccess) {
+                feedbackBox.classList.add('bg-green-950/50', 'border-green-500/40', 'text-green-200');
+            } else {
+                feedbackBox.classList.add('bg-orange-950/50', 'border-orange-500/40', 'text-orange-200');
+            }
+            feedbackBox.textContent = message;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function showFinalScreen() {
+            screenQuestion.classList.add('hidden');
+            progressIndicator.classList.add('hidden');
+            screenFinal.classList.remove('hidden');
+        }
+
+        function resetAdventure() {
+            screenFinal.classList.add('hidden');
+            screenWelcome.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            customModal.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
